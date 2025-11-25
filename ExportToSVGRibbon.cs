@@ -1,9 +1,5 @@
 ﻿using Microsoft.Office.Tools.Ribbon;
 using System;
-using System.Globalization;
-using System.IO;
-using System.Text.RegularExpressions;
-using System.Xml.Linq;
 using Excel = Microsoft.Office.Interop.Excel;
 using Forms = System.Windows.Forms;
 
