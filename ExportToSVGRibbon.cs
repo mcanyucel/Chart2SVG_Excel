@@ -1,5 +1,8 @@
 ﻿using Microsoft.Office.Tools.Ribbon;
+using SkiaSharp;
+using Svg.Skia;
 using System;
+using System.IO;
 using Excel = Microsoft.Office.Interop.Excel;
 using Forms = System.Windows.Forms;
 
@@ -12,7 +15,7 @@ namespace ChartToSVG
 
         }
 
-        private void btn_svg_Click(object sender, RibbonControlEventArgs e)
+        private void btn_export_click(object sender, RibbonControlEventArgs e)
         {
             try
             {
@@ -32,13 +35,12 @@ namespace ChartToSVG
                     return;
                 }
 
-                Forms.OpenFileDialog saveFileDialog = new Forms.OpenFileDialog
+                Forms.SaveFileDialog saveFileDialog = new Forms.SaveFileDialog
                 {
-                    Filter = "SVG Files (*.svg)|*.svg",
-                    Title = "Save Chart as SVG",
-                    CheckFileExists = false,
-                    CheckPathExists = true,
-                    DefaultExt = "svg"
+                    Filter = "PDF Files (*.pdf)|*.pdf|SVG Files (*.svg)|*.svg",
+                    Title = "Save Chart",
+                    DefaultExt = "pdf",
+                    FilterIndex = 1
                 };
 
                 if (saveFileDialog.ShowDialog() != Forms.DialogResult.OK)
@@ -47,8 +49,24 @@ namespace ChartToSVG
                 }
 
                 string filePath = saveFileDialog.FileName;
+                string extension = Path.GetExtension(filePath).ToLower();
 
-                ProcessChart(chart, filePath);
+                if (extension == ".pdf")
+                {
+                    ProcessChartToPDF(chart, filePath);
+                }
+                else if (extension == ".svg")
+                {
+                    ProcessChartToSVG(chart, filePath);
+                }
+                else
+                {
+                    Forms.MessageBox.Show(text: "Unsupported file format selected.",
+                                          caption: "Error",
+                                          buttons: Forms.MessageBoxButtons.OK,
+                                          icon: Forms.MessageBoxIcon.Error);
+                    return;
+                }
 
                 Forms.MessageBox.Show(text: "Chart exported successfully!",
                                       caption: "Success",
@@ -68,16 +86,50 @@ namespace ChartToSVG
             }
         }
 
-        private void ProcessChart(Excel.Chart chart, string filePath)
+        private void ProcessChartToSVG(Excel.Chart chart, string filePath)
         {
-            //// For any processing, export to a temp SVG file first and delete it after use
-            //string tempPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".svg");
-            //chart.Export(tempPath, "SVG");
-            //// DO things with the SVG file here
-            //File.Delete(tempPath);
-            // For now, just export directly to the specified file path
             chart.Export(filePath, "SVG");
         }
 
+        private void ProcessChartToPDF(Excel.Chart chart, string filePath)
+        {
+            string tempSvgPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".svg");
+            try
+            {
+                chart.Export(tempSvgPath, "SVG");
+
+                var svg = new SKSvg();
+                svg.Load(tempSvgPath);
+
+                if (svg.Picture == null)
+                {
+                    throw new Exception("Failed to load SVG content.");
+                }
+
+                var bounds = svg.Picture.CullRect;
+                float width = bounds.Width;
+                float height = bounds.Height;
+
+                using (var stream = new FileStream(filePath, FileMode.Create, FileAccess.Write))
+                {
+                    using (var pdfDocument = SKDocument.CreatePdf(stream))
+                    {
+                        using (var pdfCanvas = pdfDocument.BeginPage(width, height))
+                        {
+                            pdfCanvas.DrawPicture(svg.Picture);
+                        }
+                        pdfDocument.EndPage();
+                        pdfDocument.Close();
+                    }
+                }
+            }
+            finally
+            {
+                if (File.Exists(tempSvgPath))
+                {
+                    File.Delete(tempSvgPath);
+                }
+            }
+        }
     }
 }

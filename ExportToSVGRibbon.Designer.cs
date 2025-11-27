@@ -37,7 +37,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ExportToSVGRibbon));
             this.tab1 = this.Factory.CreateRibbonTab();
             this.group1 = this.Factory.CreateRibbonGroup();
-            this.btn_svg = this.Factory.CreateRibbonButton();
+            this.btn_export = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.group1.SuspendLayout();
             this.SuspendLayout();
@@ -51,18 +51,18 @@
             // 
             // group1
             // 
-            this.group1.Items.Add(this.btn_svg);
-            this.group1.Label = "Chart2SVG";
+            this.group1.Items.Add(this.btn_export);
+            this.group1.Label = "Export Chart";
             this.group1.Name = "group1";
             // 
-            // btn_svg
+            // btn_export
             // 
-            this.btn_svg.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.btn_svg.Image = ((System.Drawing.Image)(resources.GetObject("btn_svg.Image")));
-            this.btn_svg.Label = "SVG";
-            this.btn_svg.Name = "btn_svg";
-            this.btn_svg.ShowImage = true;
-            this.btn_svg.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_svg_Click);
+            this.btn_export.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.btn_export.Image = ((System.Drawing.Image)(resources.GetObject("btn_export.Image")));
+            this.btn_export.Label = "Export";
+            this.btn_export.Name = "btn_export";
+            this.btn_export.ShowImage = true;
+            this.btn_export.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btn_export_click);
             // 
             // ExportToSVGRibbon
             // 
@@ -82,7 +82,7 @@
 
         internal Microsoft.Office.Tools.Ribbon.RibbonTab tab1;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group1;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_svg;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton btn_export;
     }
 
     partial class ThisRibbonCollection

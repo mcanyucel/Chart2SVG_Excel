@@ -30,11 +30,13 @@
     <DefineConstants>VSTO40;UseOfficeInterop</DefineConstants>
     <ResolveComReferenceSilent>true</ResolveComReferenceSilent>
     <IsWebBootstrapper>False</IsWebBootstrapper>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <PublishUrl>publish\</PublishUrl>
     <InstallUrl />
     <TargetCulture>en</TargetCulture>
-    <ApplicationVersion>1.0.0.1</ApplicationVersion>
+    <ApplicationVersion>1.0.0.3</ApplicationVersion>
     <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
     <UpdateEnabled>true</UpdateEnabled>
     <UpdateInterval>7</UpdateInterval>
@@ -124,9 +126,40 @@
   -->
   <ItemGroup>
     <Reference Include="Accessibility" />
+    <Reference Include="ExCSS, Version=4.3.1.0, Culture=neutral, PublicKeyToken=bdbe16be9b936b9a, processorArchitecture=MSIL">
+      <HintPath>packages\ExCSS.4.3.1\lib\net48\ExCSS.dll</HintPath>
+    </Reference>
+    <Reference Include="ShimSkiaSharp, Version=3.2.1.0, Culture=neutral, PublicKeyToken=dafe96fe6c845a74, processorArchitecture=MSIL">
+      <HintPath>packages\ShimSkiaSharp.3.2.1\lib\net461\ShimSkiaSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="SkiaSharp, Version=3.119.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>packages\SkiaSharp.3.119.1\lib\net462\SkiaSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Svg.Custom, Version=3.2.1.0, Culture=neutral, PublicKeyToken=dafe96fe6c845a74, processorArchitecture=MSIL">
+      <HintPath>packages\Svg.Custom.3.2.1\lib\netstandard2.0\Svg.Custom.dll</HintPath>
+    </Reference>
+    <Reference Include="Svg.Model, Version=3.2.1.0, Culture=neutral, PublicKeyToken=dafe96fe6c845a74, processorArchitecture=MSIL">
+      <HintPath>packages\Svg.Model.3.2.1\lib\net461\Svg.Model.dll</HintPath>
+    </Reference>
+    <Reference Include="Svg.Skia, Version=3.2.1.0, Culture=neutral, PublicKeyToken=dafe96fe6c845a74, processorArchitecture=MSIL">
+      <HintPath>packages\Svg.Skia.3.2.1\lib\net461\Svg.Skia.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Buffers.4.6.1\lib\net462\System.Buffers.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Memory, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Memory.4.6.3\lib\net462\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.6.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Numerics.Vectors.4.6.1\lib\net462\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Runtime.CompilerServices.Unsafe.6.1.2\lib\net462\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -229,7 +262,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="ChartToSVG_TemporaryKey.pfx" />
+    <None Include="app.config" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -272,9 +306,18 @@
       <FlavorProperties GUID="{BAA0C2D2-18E2-41B9-852F-F413020CAA33}">
         <ProjectProperties HostName="Excel" HostPackage="{29A7B9D7-A7F1-4328-8EF0-6B2D1A56B2C1}" OfficeVersion="15.0" VstxVersion="4.0" ApplicationType="Excel" Language="cs" TemplatesPath="" DebugInfoExeName="#Software\Microsoft\Office\16.0\Excel\InstallRoot\Path#excel.exe" DebugInfoCommandLine="/x" AddItemTemplatesGuid="{51063C3A-E220-4D12-8922-BDA915ACD783}" />
         <Host Name="Excel" GeneratedCodeNamespace="ChartToSVG" PublishedHash="69C324AB27932AA2FBF2B7EA72250886FF164DE6" IconIndex="0">
-          <HostItem Name="ThisAddIn" Code="ThisAddIn.cs" CanonicalName="AddIn" CanActivate="false" IconIndex="1" Blueprint="ThisAddIn.Designer.xml" GeneratedCode="ThisAddIn.Designer.cs" PublishedHash="5F163CDB505E829D1DB575479293A922E92CF14E" />
+          <HostItem Name="ThisAddIn" Code="ThisAddIn.cs" CanonicalName="AddIn" PublishedHash="5F163CDB505E829D1DB575479293A922E92CF14E" CanActivate="false" IconIndex="1" Blueprint="ThisAddIn.Designer.xml" GeneratedCode="ThisAddIn.Designer.cs" />
         </Host>
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="packages\SkiaSharp.NativeAssets.macOS.3.119.1\build\net462\SkiaSharp.NativeAssets.macOS.targets" Condition="Exists('packages\SkiaSharp.NativeAssets.macOS.3.119.1\build\net462\SkiaSharp.NativeAssets.macOS.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\SkiaSharp.NativeAssets.macOS.3.119.1\build\net462\SkiaSharp.NativeAssets.macOS.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\SkiaSharp.NativeAssets.macOS.3.119.1\build\net462\SkiaSharp.NativeAssets.macOS.targets'))" />
+    <Error Condition="!Exists('packages\SkiaSharp.NativeAssets.Win32.3.119.1\build\net462\SkiaSharp.NativeAssets.Win32.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\SkiaSharp.NativeAssets.Win32.3.119.1\build\net462\SkiaSharp.NativeAssets.Win32.targets'))" />
+  </Target>
+  <Import Project="packages\SkiaSharp.NativeAssets.Win32.3.119.1\build\net462\SkiaSharp.NativeAssets.Win32.targets" Condition="Exists('packages\SkiaSharp.NativeAssets.Win32.3.119.1\build\net462\SkiaSharp.NativeAssets.Win32.targets')" />
 </Project>
